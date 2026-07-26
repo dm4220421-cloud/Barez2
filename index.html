@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پرسیار و بەسەرهاتی پۆل</title>
+    <style>
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #2d2d44;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            width: 450px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            color: #ffcc00;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            background: #4e4e6a;
+            color: white;
+            border: none;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .options button:hover {
+            background: #6a6a8a;
+        }
+        #result-section {
+            display: none;
+        }
+        .story-box {
+            background: #1f1f30;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: right;
+            font-size: 14px;
+            line-height: 1.6;
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #4e4e6a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- بەشی پرسیارەکان -->
+        <div id="quiz-section">
+            <h2 id="question-text">پرسیار لێرە دەرکەوێت...</h2>
+            <div class="options" id="options-container">
+                <!-- هەڵبژاردنەکان لێرە دادەنرێن -->
+            </div>
+        </div>
+
+        <!-- بەشی کۆتایی و بەسەرهاتەکە -->
+        <div id="result-section">
+            <h2>پیرۆزە! پرسیارەکان تەواو بوون 🎉</h2>
+            <p>ئێستا کاتی بەسەرهاتەکەی مامۆستا بەڕێز و تەلەبە هەجوولەکانە:</p>
+            <div class="story-box">
+                لە پۆلەکەدا بێدەنگییەکی ساختە هەبوو؛ یەکێک بە دەنگێکی نزم خەریکی قسەکردن بوو، ئەوی تر قەڵەمەکەی دەهاویشت. لە ناكاودا، دەرگاکە کرایەوە و <strong>مامۆستا بەڕێز</strong> بە هەنگاوێکی جدییەوە هاتە ژوورەوە!<br><br>
+                یەکێک لە قوتابییە هەژوولەکان بە چرپە وتی: <em>"کوڕینە، سەیرکەن! ڕادارەکە کەوتە کار، خێرا شتەکان شارنەوە!"</em><br><br>
+                مامۆستا بەڕێز چاوێکی بە پۆلەکەدا گێڕا و بە دەنگە گڕەکەی خۆی وتی: <em>"ئەو دەنگە چییە؟ دانیشن و کتێبەکان دابخەن، فەرموون کاغەز دەربخەن بۆ تاقیکردنەوەیەکی کتوپڕ!"</em><br><br>
+                پۆلەکە دەستی کرد بە شڵەژان و پێکەنین: یەکێکیان بە دەنگێکی بەزمییەوە وتی: <em>"مامۆستا گیان، ئەمڕۆ ڕۆژی جیهانیی پشووە!"</em> ئەوی تریش وتی: <em>"وەلا بەس ناوەکەم لەسەر کاغەزەکە دەنوسم!"</em> پۆلەکە بوو بە پێکەنین و سەرلێشێواوی! 😄
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // لیستی پرسیارەکان
+        const questions = [
+            {
+                question: "پرسیاری ١: کاتێک مامۆستا دێتە پۆل، یەکەم کار کە تەلەبە هەجوولەکان دەکەن چییە؟",
+                options: ["بێدەنگ دەبن و دەخوێنن", "شتەکان دەشارنەوە و دەڵێن ڕادار هات", "دەست بە نووسین دەکەن", "دەردەچنە دەرەوە"]
+            },
+            {
+                question: "پرسیاری ٢: مامۆستا بەڕێز کاتێک تووڕە دەبێت چی داوا دەکات؟",
+                options: ["داوای قاوە دەکات", "تاقیکردنەوەی کتوپڕ دادەنێت", "پشوو ڕادەگەیەنێت", "دەچێتە ژووری مامۆستایان"]
+            },
+            {
+                question: "پرسیاری ٣: کاردانەوەی تەلەبەکان بۆ تاقیکردنەوە کتوپڕەکە چی دەبێت؟",
+                options: ["دڵخۆش دەبن", "سەیر دەبەن و دەڵێن تەنها ناوی خۆمان دەنوسین", "هەمووی ڕاست دەبەن", "پارتی دەکەن"]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        const questionText = document.getElementById("question-text");
+        const optionsContainer = document.getElementById("options-container");
+        const quizSection = document.getElementById("quiz-section");
+        const resultSection = document.getElementById("result-section");
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                let currentQ = questions[currentQuestionIndex];
+                questionText.innerText = currentQ.question;
+                optionsContainer.innerHTML = "";
+
+                currentQ.options.forEach(option => {
+                    let btn = document.createElement("button");
+                    btn.innerText = option;
+                    btn.onclick = () => nextQuestion();
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                showResult();
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function showResult() {
+            quizSection.style.display = "none";
+            resultSection.style.display = "block";
+        }
+
+        loadQuestion();
+    </script>
+
+</body>
+</html>
